@@ -21,8 +21,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<UserDto> usersListDto = userService.getAllUsers().stream().map(UserDto::new).toList();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> usersListDto = userService.getAllUsers();
         return ResponseEntity.ok(usersListDto);
     }
 
@@ -39,9 +39,9 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody User user) {
-        UserDto createdUserDto = new UserDto(userService.createUser(user));
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUserDto);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        User createdUser = userService.createUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
