@@ -29,11 +29,13 @@
 - name
 - list of events in this category
 
-# User enpoints:(package "event_management": package "user_management")
+# User endpoints:(package "event_management": package "user_management")
 - getAllUsers:
   shows all existing users 
 - getUser
-  finds user by his id
+  finds user by his name
+- - getUserById
+    finds user by his id
 - updateUser
    validates all fields if they don't mach with the previous ones and aren't null
    updates users's fields that are valid
@@ -45,7 +47,7 @@
 - deleteUser
    deletes user by id if such exists
 
-# Event enpoints:(package "event_management")
+# Event endpoints:(package "event_management")
 - getAllEvents:
   shows all existing Events or throws appropriate exception
 - getEvent:
@@ -61,7 +63,7 @@
 - deleteEvent
   deletes event by id if such exists
 
-# Category enpoints:(package "event_management")
+# Category endpoints:(package "event_management")
 - getAllCategories:
   shows all existing Categories or throws appropriate exception
 - getCategoryById:
