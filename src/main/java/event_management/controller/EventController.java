@@ -42,6 +42,12 @@ public class EventController {
         return ResponseEntity.ok(updatedEvent);
     }
 
+    @PatchMapping("/{eventId}/{userId}")
+    public ResponseEntity<Void> setEventInUserList(@PathVariable Long eventId, @PathVariable Long userId){
+        eventService.setEventInUserList(eventId, userId);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.delete(id);

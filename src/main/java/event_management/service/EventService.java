@@ -9,6 +9,9 @@ import event_management.model.dto.EventUpdateDto;
 import event_management.model.dto.adapter.EventCreateDtoAdapter;
 import event_management.model.dto.adapter.EventUpdateDtoAdapter;
 import event_management.repository.EventRepository;
+import event_management.user_management.UserRepository;
+import event_management.user_management.model.User;
+import event_management.user_management.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +27,8 @@ public class EventService {
     private final EventCreateDtoAdapter eventCreateDtoAdapter;
 
     private final EventUpdateDtoAdapter eventUpdateDtoAdapter;
+
+    private final UserRepository userRepository;
 
     public List<Event> getAll() {
         return eventRepository.findAll();
@@ -60,6 +65,11 @@ public class EventService {
         Event updatedEvent = eventUpdateDtoAdapter.updateEventFromDto(get(eventId), eventUpdateDto);
 
         return save(updatedEvent);
+    }
+
+    public void setEventInUserList(Long eventId, Long userId){
+       UserService userService = new UserService(userRepository);
+       userService.getUser(userId).getEventSubscriptionSet().add(get(eventId));
     }
 
     public void delete(Long id) {

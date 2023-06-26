@@ -12,10 +12,7 @@ import org.hibernate.Hibernate;
 
 
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "user", schema = "public")
@@ -23,7 +20,7 @@ import java.util.Set;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class User{
+public class User {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -68,14 +65,13 @@ public class User{
     @Past(message = "Birth date must be in the past")
     private Date dateOfBirth;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_event_subscription",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "event_id")})
+    private List<Event> eventSubscriptionSet;
 
-    @OneToMany(mappedBy = "user")
-    @ToString.Exclude
-    @JsonIgnore
-    private Set<UserEventSubscription> userEventSubscriptions = new LinkedHashSet<>();
-
-
-    // For testing purposes only
     public User(Long id, @NotNull String username, @NotNull String password, @NotNull String email) {
         this.id = id;
         this.username = username;
@@ -108,5 +104,6 @@ public class User{
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<Event> events = new HashSet<>();
-
 }
+
+

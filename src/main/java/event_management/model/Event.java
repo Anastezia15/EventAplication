@@ -11,6 +11,7 @@ import org.hibernate.Hibernate;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -67,7 +68,7 @@ public class Event {
     private Category category;
 
     @ManyToMany(mappedBy = "events")
-    private Set<User> users = new HashSet<>();
+    private List<User> users;
 
     @Override
     public boolean equals(Object o) {
