@@ -18,8 +18,6 @@ import java.util.Set;
 public class CategoryWithEventsDto {
     private Long id;
     private String name;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
     private Set<Event> events;
 
     public CategoryWithEventsDto(Category category) {

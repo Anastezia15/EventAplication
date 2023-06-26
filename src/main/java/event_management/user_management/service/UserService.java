@@ -1,6 +1,7 @@
 package event_management.user_management.service;
 
 import event_management.exception.AlreadyExistsException;
+import event_management.exception.UserNotFoundException;
 import event_management.user_management.UserRepository;
 import event_management.user_management.model.User;
 import event_management.user_management.model.dto.UserDto;
@@ -19,13 +20,18 @@ public class UserService implements ServiceUpdateValidation {
     {
         return userRepository.findAll();
     }
-    public User getUser(Long userId){
+
+    public User getUserById(Long userId){
 
         return userRepository.findById(userId).orElseThrow();
     }
+    public User getUser(String username){
+
+        return userRepository.findByUsername(username).orElseThrow();
+    }
 
     public User updateUser(Long userId, UserDto userDto){
-        userFromDb = getUser(userId);
+        userFromDb = getUserById(userId);
         if(checkEmail(userDto)) userFromDb.setEmail(userDto.getEmail());
         if(checkUsername(userDto)) userFromDb.setUsername(userDto.getUsername());
         if (checkPassword(userDto)) userFromDb.setPassword(userDto.getPassword());
@@ -65,7 +71,7 @@ public class UserService implements ServiceUpdateValidation {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
         } else {
-            System.out.println("Such user doesn't exist");
+            throw new UserNotFoundException(id);
         }
     }
 }

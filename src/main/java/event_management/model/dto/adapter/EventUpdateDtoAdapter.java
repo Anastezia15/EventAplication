@@ -14,7 +14,7 @@ public class EventUpdateDtoAdapter {
     private final CategoryService categoryService;
 
     public Event updateEventFromDto(Event event, EventUpdateDto dto) {
-        Category category = categoryService.get(dto.getCategory());
+        Category category = categoryService.getCategoryByName(dto.getCategory());
 
         return Event.builder()
                 .id(event.getId())

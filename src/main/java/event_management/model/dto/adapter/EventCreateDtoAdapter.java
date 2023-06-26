@@ -14,7 +14,7 @@ public class EventCreateDtoAdapter {
     private final CategoryService categoryService;
 
     public Event fromDto(EventCreateDto dto) {
-        Category category = categoryService.get(dto.getCategory());
+        Category category = categoryService.getCategoryByName(dto.getCategory());
 
         return Event.builder()
                 .creatorId(dto.getCreatorId())

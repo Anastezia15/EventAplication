@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/categories")
+@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController {
-//    private static final String GET_CATEGORY_REL = "get-category";
+//    private static final String GET_CATEGORY_REL = "getEvent-category";
 //    private static final String CREATE_CATEGORY_REL = "create-category";
-//    private static final String GET_ALL_CATEGORIES_REL = "get-all-categories";
+//    private static final String GET_ALL_CATEGORIES_REL = "getEvent-all-categories";
 //    private static final String SELF_REL = "self";
     private final CategoryService categoryService;
 
@@ -42,7 +42,7 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategory(@PathVariable Long id) {
-        Category category = categoryService.get(id);
+        Category category = categoryService.getCategoryById(id);
 
 //        category.add(
 //                linkTo(methodOn(CategoryController.class).getCategory(id)).withRel(SELF_REL),
@@ -74,7 +74,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
-        Category createdCategory = categoryService.create(category);
+        Category createdCategory = categoryService.createCategory(category);
 
 //        createdCategory.add(
 //                linkTo(methodOn(CategoryController.class).createCategory(category)).withRel(SELF_REL),
@@ -92,7 +92,7 @@ public class CategoryController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDto categoryDto) {
-        Category updatedCategory = categoryService.update(id, categoryDto);
+        Category updatedCategory = categoryService.updateCategory(id, categoryDto);
 
 //        updatedCategory.add(
 //                linkTo(methodOn(CategoryController.class).updateCategory(id, categoryDto)).withRel(SELF_REL),
@@ -105,7 +105,7 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        categoryService.delete(id);
+        categoryService.deleteCategory(id);
         return ResponseEntity.ok().build();
     }
 }

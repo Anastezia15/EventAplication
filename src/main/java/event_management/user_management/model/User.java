@@ -1,6 +1,5 @@
 package event_management.user_management.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import event_management.model.Event;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -10,9 +9,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-
 import java.sql.Date;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user", schema = "public")
@@ -99,11 +98,6 @@ public class User {
         return getClass().hashCode();
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_event",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id"))
-    private Set<Event> events = new HashSet<>();
 }
 
 

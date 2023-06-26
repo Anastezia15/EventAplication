@@ -26,9 +26,15 @@ public class UserController {
         return ResponseEntity.ok(usersListDto);
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable("username") String username) {
+        UserDto userDto = new UserDto(userService.getUser(username));
+        return ResponseEntity.ok(userDto);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
-        UserDto userDto = new UserDto(userService.getUser(id));
+        UserDto userDto = new UserDto(userService.getUserById(id));
         return ResponseEntity.ok(userDto);
     }
 
@@ -47,6 +53,6 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }

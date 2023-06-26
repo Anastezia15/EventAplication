@@ -8,9 +8,9 @@ import event_management.model.dto.EventCreateDto;
 import event_management.model.dto.EventUpdateDto;
 import event_management.model.dto.adapter.EventCreateDtoAdapter;
 import event_management.model.dto.adapter.EventUpdateDtoAdapter;
+import event_management.repository.CategoryRepository;
 import event_management.repository.EventRepository;
 import event_management.user_management.UserRepository;
-import event_management.user_management.model.User;
 import event_management.user_management.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,15 +30,17 @@ public class EventService {
 
     private final UserRepository userRepository;
 
+    private final CategoryRepository categoryRepository;
+
     public List<Event> getAll() {
         return eventRepository.findAll();
     }
 
-    public Event get(Long id) {
+    public Event getEvent(Long id) {
         return eventRepository.findById(id).orElseThrow(() -> new EventNotFoundException(id));
     }
 
-    public Event save(Event event) {
+    public Event saveEvent(Event event) {
         Event savedEvent;
 
         try {
@@ -51,25 +53,29 @@ public class EventService {
         return savedEvent;
     }
 
-    public Event create(EventCreateDto eventCreateDto) {
+    public Event createEvent(EventCreateDto eventCreateDto) {
         Event createdEvent = eventCreateDtoAdapter.fromDto(eventCreateDto);
 
         for (Event event:getAll()) {
             if (eventCreateDto.equals(eventCreateDtoAdapter.toDto(event))) throw new AlreadyExistsException("Such event already exists.");
         }
 
+        CategoryService categoryService = new CategoryService(categoryRepository, eventRepository);
+        categoryService.getCategoryById(categoryRepository.findByName(eventCreateDto.getCategory()).get().getId()).getEvents().add(createdEvent);
+
+
         return eventRepository.save(createdEvent);
     }
 
-    public Event update(Long eventId, EventUpdateDto eventUpdateDto) {
-        Event updatedEvent = eventUpdateDtoAdapter.updateEventFromDto(get(eventId), eventUpdateDto);
+    public Event updateEvent(Long eventId, EventUpdateDto eventUpdateDto) {
+        Event updatedEvent = eventUpdateDtoAdapter.updateEventFromDto(getEvent(eventId), eventUpdateDto);
 
-        return save(updatedEvent);
+        return saveEvent(updatedEvent);
     }
 
     public void setEventInUserList(Long eventId, Long userId){
        UserService userService = new UserService(userRepository);
-       userService.getUser(userId).getEventSubscriptionSet().add(get(eventId));
+       userService.getUserById(userId).getEventSubscriptionSet().add(getEvent(eventId));
     }
 
     public void delete(Long id) {

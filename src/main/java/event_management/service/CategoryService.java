@@ -29,7 +29,7 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category get(Long id) {
+    public Category getCategoryById(Long id) {
         return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException(id));
     }
 
@@ -46,12 +46,12 @@ public class CategoryService {
     }
 
 
-    public Category get(String name) {
+    public Category getCategoryByName(String name) {
         return categoryRepository.findByName(name)
                 .orElseThrow(() -> new CategoryNotFoundException(name));
     }
 
-    public Category save(Category category) {
+    public Category saveCategory(Category category) {
         try {
             return categoryRepository.save(category);
         } catch (RuntimeException ex) {
@@ -60,23 +60,23 @@ public class CategoryService {
         }
     }
 
-    public Category create(Category category) {
+    public Category createCategory(Category category) {
         if (categoryRepository.existsByName(category.getName())) {
             throw new AlreadyExistsException("This category is already registered");
         } else {
-            return save(category);
+            return saveCategory(category);
         }
     }
 
-    public Category update(Long categoryId, CategoryDto categoryDto) {
-        Category categoryFromDb = get(categoryId);
+    public Category updateCategory(Long categoryId, CategoryDto categoryDto) {
+        Category categoryFromDb = getCategoryById(categoryId);
 
         if (categoryDto.getName() != null &&
                 checkNameUpdate(categoryFromDb.getName(), categoryDto.getName())) {
             categoryFromDb.setName(categoryDto.getName());
         }
 
-        return save(categoryFromDb);
+        return saveCategory(categoryFromDb);
     }
 
     public boolean checkNameUpdate(String nameFromDb, String updatedName) {
@@ -86,7 +86,7 @@ public class CategoryService {
         return true;
     }
 
-    public void delete(Long id) {
+    public void deleteCategory(Long id) {
         if (categoryRepository.existsById(id)) {
             categoryRepository.deleteById(id);
         } else {

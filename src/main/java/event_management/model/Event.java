@@ -67,9 +67,6 @@ public class Event {
     @NotNull
     private Category category;
 
-    @ManyToMany(mappedBy = "events")
-    private List<User> users;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
