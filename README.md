@@ -83,14 +83,9 @@
   deletes category by id if such exists
 
 
-# User Management API
+# User API
 
-This API provides endpoints for managing users in the event management system.
-
-## Base URL
-The base URL for all endpoints is `/users`.
-
-## Endpoints
+## Endpoints:
 
 ### Get All Users
 - Method: GET
@@ -150,98 +145,121 @@ The base URL for all endpoints is `/users`.
     - HTTP Status Code: 200 (OK)
     - Body: None
 
-# Event Management API
+# Event API
 
-This is a RESTful API for managing events. It provides endpoints to perform CRUD (Create, Read, Update, Delete) operations on events.
+## Endpoints:
 
-## Endpoints
+### Get all events
 
-### Get All Events
+- **URL:** `/`
+- **Method:** GET
+- **Description:** Retrieves all events.
+- **Response Body:** List of `Event` objects.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-Returns a list of all events.
+### Get event by ID
 
-- **URL**: `/events`
-- **Method**: GET
-- **Response**: List of Event objects
-- **Status Codes**:
-    - 200 OK: Returns the list of events.
+- **URL:** `/id/{id}`
+- **Method:** GET
+- **Description:** Retrieves an event by its ID.
+- **Path Variable:**
+  - `id`: ID of the event.
+- **Response Body:** `Event` object.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-### Get Event by ID
+### Get event by title
 
-Returns the details of a specific event.
+- **URL:** `/title/{title}`
+- **Method:** GET
+- **Description:** Retrieves an event by its title.
+- **Path Variable:**
+  - `title`: Title of the event.
+- **Response Body:** `Event` object.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-- **URL**: `/events/{id}`
-- **Method**: GET
-- **Parameters**:
-    - `id`: ID of the event to retrieve
-- **Response**: Event object
-- **Status Codes**:
-    - 200 OK: Returns the event details.
+### Create event
 
-### Create Event
+- **URL:** `/`
+- **Method:** POST
+- **Description:** Creates a new event.
+- **Request Body:** `EventCreateDto` object.
+- **Response Body:** `Event` object.
+- **Response Status Codes:**
+  - 201 Created: Event created successfully.
 
-Creates a new event.
+### Update event
 
-- **URL**: `/events`
-- **Method**: POST
-- **Request Body**: EventCreateDto object (contains event details)
-- **Response**: Created Event object
-- **Status Codes**:
-    - 201 Created: Returns the created event.
+- **URL:** `/{id}`
+- **Method:** PATCH
+- **Description:** Updates an existing event.
+- **Path Variable:**
+  - `id`: ID of the event to be updated.
+- **Request Body:** `EventUpdateDto` object.
+- **Response Body:** `Event` object.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-### Update Event
+### Subscribe user to event
 
-Updates an existing event.
+- **URL:** `/subscribe/{eventId}/{userId}`
+- **Method:** PATCH
+- **Description:** Subscribes a user to an event.
+- **Path Variables:**
+  - `eventId`: ID of the event.
+  - `userId`: ID of the user.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-- **URL**: `/events/{id}`
-- **Method**: PATCH
-- **Parameters**:
-    - `id`: ID of the event to update
-- **Request Body**: EventUpdateDto object (contains updated event details)
-- **Response**: Updated Event object
-- **Status Codes**:
-    - 200 OK: Returns the updated event.
+### Get event subscribers
 
-### Set Event in User List
+- **URL:** `/subscribers/{eventId}`
+- **Method:** GET
+- **Description:** Retrieves all subscribers of an event.
+- **Path Variable:**
+  - `eventId`: ID of the event.
+- **Response Body:** List of `User` objects.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-Associates an event with a user.
+### Get user's subscriptions on events
 
-- **URL**: `/events/{eventId}/{userId}`
-- **Method**: PATCH
-- **Parameters**:
-    - `eventId`: ID of the event to associate
-    - `userId`: ID of the user to associate
-- **Response**: No response body
-- **Status Codes**:
-    - 200 OK: The event is associated with the user successfully.
+- **URL:** `/subscriptions_on_events/{userId}`
+- **Method:** GET
+- **Description:** Retrieves all events subscribed by a user.
+- **Path Variable:**
+  - `userId`: ID of the user.
+- **Response Body:** List of `Event` objects.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-### Delete Event
+### Unsubscribe user from event
 
-Deletes an event.
+- **URL:** `/unsubscribe/{eventId}/{userId}`
+- **Method:** PATCH
+- **Description:** Unsubscribes a user from an event.
+- **Path Variables:**
+  - `eventId`: ID of the event.
+  - `userId`: ID of the user.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
-- **URL**: `/events/{id}`
-- **Method**: DELETE
-- **Parameters**:
-    - `id`: ID of the event to delete
-- **Response**: No response body
-- **Status Codes**:
-    - 200 OK: The event is deleted successfully.
+### Delete event
+
+- **URL:** `/{id}`
+- **Method:** DELETE
+- **Description:** Deletes an event.
+- **Path Variable:**
+  - `id`: ID of the event to be deleted.
+- **Response Status Codes:**
+  - 200 OK: Successful operation.
 
 
 # Category API
 
-This API provides endpoints to manage categories.
-
-## Table of Contents
-- [Endpoints](#endpoints)
-    - [Get all categories](#get-all-categories)
-    - [Get category by ID](#get-category-by-id)
-    - [Get category events](#get-category-events)
-    - [Create a new category](#create-a-new-category)
-    - [Update a category](#update-a-category)
-    - [Delete a category](#delete-a-category)
-
-## Endpoints
+## Endpoints:
 
 ### Get all categories
 - Method: GET
@@ -303,3 +321,31 @@ This API provides endpoints to manage categories.
     - `{id}`: ID of the category to be deleted
 - Response:
     - Status: 200 OK
+
+# Project Functionality
+
+## User Functionality
+
+- **Registration**: Users can register an account to access the platform.
+- **Login**: Registered users can log in to their accounts.
+- **Browse Events by Category**: Users can view events of a specific category.
+- **Subscribe to an Event**: Users can subscribe to an event to receive updates and notifications.
+- **Unsubscribe from an Event**: Users can unsubscribe from events they are no longer interested in.
+- **View Subscriptions**: Users can see a list of events they are subscribed to.
+- **Create an Event**: Users can create their own events and provide details such as title, description, date, and location.
+- **Modify an Event**: Users can edit the details of the events they created.
+- **View Subscriptions to Own Events**: Users can see the list of subscribers for the events they created.
+- **Delete an Event**: Users have the option to delete events they created.
+
+## Admin Functionality
+
+- **Login**: Administrators can log in to their accounts.
+- **View All Users**: Administrators can browse and access information about all registered users.
+- **Find a Specific User**: Administrators can search for a particular user based on username or other criteria.
+- **Find a Specific Event**: Administrators can search for a specific event based on event details or other criteria.
+- **View All Events**: Administrators can see a list of all events available on the platform.
+- **Delete a User**: Administrators have the authority to delete user accounts if necessary.
+- **Delete an Event**: Administrators can remove events from the platform.
+- **Delete a Category**: Administrators can delete categories associated with events.
+- **View Subscriptions to an Event**: Administrators can see the list of users subscribed to a particular event.
+- **View Subscriptions of a Specific User**: Administrators can view all subscriptions of a specific user.
