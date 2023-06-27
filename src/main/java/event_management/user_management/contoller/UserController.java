@@ -27,12 +27,12 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("username") String username) {
+    public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) {
         UserDto userDto = new UserDto(userService.getUser(username));
         return ResponseEntity.ok(userDto);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
         UserDto userDto = new UserDto(userService.getUserById(id));
         return ResponseEntity.ok(userDto);
