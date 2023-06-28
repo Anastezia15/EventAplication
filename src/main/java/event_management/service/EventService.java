@@ -10,7 +10,7 @@ import event_management.model.dto.adapter.EventCreateDtoAdapter;
 import event_management.model.dto.adapter.EventUpdateDtoAdapter;
 import event_management.repository.CategoryRepository;
 import event_management.repository.EventRepository;
-import event_management.user_management.UserRepository;
+import event_management.user_management.model.User;
 import event_management.user_management.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,16 +28,19 @@ public class EventService {
 
     private final EventUpdateDtoAdapter eventUpdateDtoAdapter;
 
-    private final UserRepository userRepository;
-
     private final CategoryRepository categoryRepository;
+
+    private final UserService userService;
 
     public List<Event> getAll() {
         return eventRepository.findAll();
     }
 
-    public Event getEvent(Long id) {
+    public Event getEventById(Long id) {
         return eventRepository.findById(id).orElseThrow(() -> new EventNotFoundException(id));
+    }
+    public Event getEventByTitle(String title) {
+        return eventRepository.findByTitle(title).orElseThrow(() -> new EventNotFoundException(title));
     }
 
     public Event saveEvent(Event event) {
@@ -68,14 +71,16 @@ public class EventService {
     }
 
     public Event updateEvent(Long eventId, EventUpdateDto eventUpdateDto) {
-        Event updatedEvent = eventUpdateDtoAdapter.updateEventFromDto(getEvent(eventId), eventUpdateDto);
+        Event updatedEvent = eventUpdateDtoAdapter.updateEventFromDto(getEventById(eventId), eventUpdateDto);
 
         return saveEvent(updatedEvent);
     }
 
-    public void setEventInUserList(Long eventId, Long userId){
-       UserService userService = new UserService(userRepository);
-       userService.getUserById(userId).getEventSubscriptionSet().add(getEvent(eventId));
+    public List<User> getAllSubscribers(Long eventId){
+        return getEventById(eventId).getUserSubscriptionList();
+    }
+    public List<Event> getAllSubscriptionsOnEvents(Long userId){
+        return userService.getUserById(userId).getEventSubscriptionList();
     }
 
     public void delete(Long id) {

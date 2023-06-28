@@ -28,4 +28,5 @@ public class EventUpdateDtoAdapter {
                 .category(category)
                 .build();
     }
+
 }

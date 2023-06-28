@@ -24,6 +24,7 @@
 - date
 - time
 - Category(instance)
+- list of users that are subscribed on this event
 
 # Category has:
 - name
@@ -58,8 +59,6 @@
   if such event doesn't exist already, a new one is created
 - updateEvent
    updates existing event
-- setEventInUserList
-  subscribes user to an event adding it to concrete user's list of events
 - deleteEvent
   deletes event by id if such exists
 
@@ -211,7 +210,7 @@
   - `eventId`: ID of the event.
   - `userId`: ID of the user.
 - **Response Status Codes:**
-  - 200 OK: Successful operation.
+  - 200 OK: Subscription accomplished successfully.
 
 ### Get event subscribers
 
@@ -244,7 +243,7 @@
   - `eventId`: ID of the event.
   - `userId`: ID of the user.
 - **Response Status Codes:**
-  - 200 OK: Successful operation.
+  - 200 OK: Unsubscription accomplished successfully.
 
 ### Delete event
 

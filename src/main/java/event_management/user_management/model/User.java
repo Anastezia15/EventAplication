@@ -1,5 +1,6 @@
 package event_management.user_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import event_management.model.Event;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -69,7 +70,8 @@ public class User {
             name = "user_event_subscription",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id")})
-    private List<Event> eventSubscriptionSet;
+    @JsonIgnore
+    private List<Event> eventSubscriptionList;
 
     public User(Long id, @NotNull String username, @NotNull String password, @NotNull String email) {
         this.id = id;

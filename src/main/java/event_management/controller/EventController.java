@@ -3,7 +3,11 @@ package event_management.controller;
 import event_management.model.Event;
 import event_management.model.dto.EventCreateDto;
 import event_management.model.dto.EventUpdateDto;
+import event_management.repository.EventRepository;
 import event_management.service.EventService;
+import event_management.user_management.UserRepository;
+import event_management.user_management.model.User;
+import event_management.user_management.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,9 @@ import java.util.List;
 public class EventController {
 
     private final EventService eventService;
+    private final UserService userService;
+    private final UserRepository userRepository;
+    private final EventRepository eventRepository;
 
     @GetMapping
     public ResponseEntity<List<Event>> getAllEvents() {
@@ -24,9 +31,14 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
-        Event event = eventService.getEvent(id);
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Event> getEventById(@PathVariable Long id) {
+        Event event = eventService.getEventById(id);
+        return ResponseEntity.ok(event);
+    }
+    @GetMapping("/title/{id}")
+    public ResponseEntity<Event> getEventByTitle(@PathVariable String title) {
+        Event event = eventService.getEventByTitle(title);
         return ResponseEntity.ok(event);
     }
 
@@ -42,12 +54,43 @@ public class EventController {
         return ResponseEntity.ok(updatedEvent);
     }
 
-    @PatchMapping("/{eventId}/{userId}")
-    public ResponseEntity<Void> setEventInUserList(@PathVariable Long eventId, @PathVariable Long userId){
-        eventService.setEventInUserList(eventId, userId);
-        return ResponseEntity.ok().build();
+    @PostMapping("/subscribe/{eventId}/{userId}")
+    public ResponseEntity<String> setSubscriptions(@PathVariable Long eventId, @PathVariable Long userId) {
+        Event event = eventService.getEventById(eventId);
+        User user = userService.getUserById(userId);
+        event.getUserSubscriptionList().add(user);
+        user.getEventSubscriptionList().add(event);
+
+        eventRepository.save(event);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Subscription accomplished successfully");
     }
 
+    @GetMapping("/subscribers/{eventId}")
+    public ResponseEntity<List<User>> getEventSubscribers(@PathVariable Long eventId){
+    List<User> eventSubscribers = eventService.getAllSubscribers(eventId);
+        return ResponseEntity.ok(eventSubscribers);
+    }
+    @GetMapping("/subscriptions_on_events/{userId}")
+    public ResponseEntity<List<Event>> getSubscriptionsOnEvent(@PathVariable Long userId){
+        List<Event> userSubscriptionsOnEvent = eventService.getAllSubscriptionsOnEvents(userId);
+        return ResponseEntity.ok(userSubscriptionsOnEvent);
+    }
+
+    @PatchMapping("/unsubscribe/{eventId}/{userId}")
+    public ResponseEntity<String> removeEventFromUserList(@PathVariable Long eventId, @PathVariable Long userId){
+        Event event = eventService.getEventById(eventId);
+        User user = userService.getUserById(userId);
+
+        event.getUserSubscriptionList().remove(user);
+        user.getEventSubscriptionList().remove(event);
+
+        eventRepository.save(event);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Unsubscription accomplished successfully");
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEvent(@PathVariable Long id) {
         eventService.delete(id);

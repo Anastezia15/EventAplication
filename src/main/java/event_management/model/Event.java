@@ -1,5 +1,6 @@
 package event_management.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import event_management.user_management.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
@@ -10,10 +11,8 @@ import org.hibernate.Hibernate;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -66,6 +65,15 @@ public class Event {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     @NotNull
     private Category category;
+
+
+    @ManyToMany
+    @JoinTable(
+            name = "event_user_subscription",
+            joinColumns = {@JoinColumn(name = "event_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    @JsonIgnore
+    private List<User> userSubscriptionList;
 
     @Override
     public boolean equals(Object o) {
