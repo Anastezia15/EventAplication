@@ -9,7 +9,7 @@ import event_management.model.dto.adapter.EventCreateDtoAdapter;
 import event_management.model.dto.adapter.EventUpdateDtoAdapter;
 import event_management.repository.CategoryRepository;
 import event_management.repository.EventRepository;
-import event_management.user_management.UserRepository;
+import event_management.user_management.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class EventServiceTest {
@@ -36,7 +37,7 @@ class EventServiceTest {
     private EventUpdateDtoAdapter eventUpdateDtoAdapter;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Mock
     private  CategoryRepository categoryRepository;
@@ -44,7 +45,7 @@ class EventServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        eventService = new EventService(eventRepository, eventCreateDtoAdapter, eventUpdateDtoAdapter,userRepository,categoryRepository);
+        eventService = new EventService(eventRepository, eventCreateDtoAdapter, eventUpdateDtoAdapter, categoryRepository, userService);
     }
 
     @Test
@@ -69,7 +70,7 @@ class EventServiceTest {
         when(eventRepository.findById(eventId)).thenReturn(Optional.of(expectedEvent));
 
         // When
-        Event actualEvent = eventService.getEvent(eventId);
+        Event actualEvent = eventService.getEventById(eventId);
 
         // Then
         assertSame(expectedEvent, actualEvent);
@@ -83,7 +84,7 @@ class EventServiceTest {
         when(eventRepository.findById(eventId)).thenReturn(Optional.empty());
 
         // When and Then
-        assertThrows(EventNotFoundException.class, () -> eventService.getEvent(eventId));
+        assertThrows(EventNotFoundException.class, () -> eventService.getEventById(eventId));
         verify(eventRepository).findById(eventId);
     }
 

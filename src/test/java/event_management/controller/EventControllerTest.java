@@ -101,7 +101,7 @@ class EventControllerTest {
                 .time(Time.valueOf("19:00:00"))
                 .category(new Category(1L, "Test Category"))
                 .build();
-        when(eventService.getEvent(1L)).thenReturn(event);
+        when(eventService.getEventById(1L)).thenReturn(event);
 
         // When and Then
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/events/1")
