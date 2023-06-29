@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("http://localhost:8080")
@@ -69,13 +70,13 @@ public class EventController {
     }
 
     @GetMapping("/subscribers/{eventId}")
-    public ResponseEntity<List<User>> getEventSubscribers(@PathVariable Long eventId){
-    List<User> eventSubscribers = eventService.getAllSubscribers(eventId);
+    public ResponseEntity<Set<User>> getEventSubscribers(@PathVariable Long eventId){
+    Set<User> eventSubscribers = eventService.getAllSubscribers(eventId);
         return ResponseEntity.ok(eventSubscribers);
     }
     @GetMapping("/subscriptions_on_events/{userId}")
-    public ResponseEntity<List<Event>> getSubscriptionsOnEvent(@PathVariable Long userId){
-        List<Event> userSubscriptionsOnEvent = eventService.getAllSubscriptionsOnEvents(userId);
+    public ResponseEntity<Set<Event>> getSubscriptionsOnEvent(@PathVariable Long userId){
+        Set<Event> userSubscriptionsOnEvent = eventService.getAllSubscriptionsOnEvents(userId);
         return ResponseEntity.ok(userSubscriptionsOnEvent);
     }
 

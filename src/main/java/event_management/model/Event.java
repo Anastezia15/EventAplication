@@ -11,15 +11,15 @@ import org.hibernate.Hibernate;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @ToString
 @Builder
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,7 +73,7 @@ public class Event {
             joinColumns = {@JoinColumn(name = "event_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     @JsonIgnore
-    private List<User> userSubscriptionList;
+    private Set<User> userSubscriptionList;
 
     @Override
     public boolean equals(Object o) {

@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -76,10 +77,10 @@ public class EventService {
         return saveEvent(updatedEvent);
     }
 
-    public List<User> getAllSubscribers(Long eventId){
+    public Set<User> getAllSubscribers(Long eventId){
         return getEventById(eventId).getUserSubscriptionList();
     }
-    public List<Event> getAllSubscriptionsOnEvents(Long userId){
+    public Set<Event> getAllSubscriptionsOnEvents(Long userId){
         return userService.getUserById(userId).getEventSubscriptionList();
     }
 

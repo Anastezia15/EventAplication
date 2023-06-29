@@ -11,8 +11,8 @@ import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "user", schema = "public")
@@ -71,7 +71,7 @@ public class User {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id")})
     @JsonIgnore
-    private List<Event> eventSubscriptionList;
+    private Set<Event> eventSubscriptionList;
 
     public User(Long id, @NotNull String username, @NotNull String password, @NotNull String email) {
         this.id = id;
