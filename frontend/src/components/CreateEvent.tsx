@@ -28,7 +28,6 @@ const CreateEvent = () => {
     });
 
     const getUser = users.data.find((user: any) => user.username === userData.username);
-    console.log("getUser", getUser);
 
     if (
       !titleRef.current ||
@@ -40,6 +39,55 @@ const CreateEvent = () => {
       !categoryRef.current
     )
       return null;
+
+    console.log("userData.username", userData.username);
+    let arrayOfEvents = [];
+    if (localStorage.getItem(`${userData.username}`)) {
+      const parsedData = {
+        ...JSON.parse(localStorage.getItem(`${userData.username}`)),
+      };
+      console.log("parsedData", parsedData);
+      arrayOfEvents = [
+        ...parsedData.createdEvents,
+        {
+          creatorId: getUser.id,
+          title: titleRef.current.value,
+          description: descriptionRef.current.value,
+          imageUrl: imageUrlRef.current.value,
+          location: locationRef.current.value,
+          date: dateRef.current.value,
+          time: timeRef.current.value,
+          category: categoryRef.current.value,
+        },
+      ];
+    } else {
+      arrayOfEvents = [
+        {
+          creatorId: getUser.id,
+          title: titleRef.current.value,
+          description: descriptionRef.current.value,
+          imageUrl: imageUrlRef.current.value,
+          location: locationRef.current.value,
+          date: dateRef.current.value,
+          time: timeRef.current.value,
+          category: categoryRef.current.value,
+        },
+      ];
+    }
+
+    localStorage.setItem(
+      `${userData.username}`,
+      JSON.stringify({
+        username: userData.username,
+        createdEvents: arrayOfEvents,
+      })
+    );
+    console.log("getUser", getUser);
+
+    console.log(
+      "JSONPARSE",
+      JSON.parse(localStorage.getItem(`${userData.username}`)).createdEvents
+    );
 
     const data = {
       creatorId: getUser.id,

@@ -10,11 +10,13 @@ const MyEvents = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getUserEvents(userData.id);
+      const data = JSON.parse(localStorage.getItem(`${userData.username}`));
       console.log(data);
-      setUserEvents(data);
+      setUserEvents(data.createdEvents);
     })();
   }, []);
+
+  console.log("TEST", JSON.parse(localStorage.getItem(`${userData.username}`)));
 
   return (
     <div className="pt-10">
