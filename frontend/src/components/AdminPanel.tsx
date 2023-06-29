@@ -28,18 +28,18 @@ const AdminPanel = () => {
           >
             Categories
           </button>
-          <button
+          {/* <button
             className={`${view === "createEventView" && "bg-blue-300 rounded-b-lg "} p-4`}
             onClick={() => setView("createEventView")}
           >
             Create event
-          </button>
+          </button> */}
         </div>
 
         {view === "usersView" && <ViewUsers />}
         {view === "eventsView" && <ViewEvents />}
         {view === "categoriesView" && <ViewCategories />}
-        {view === "subscriptionsView" && <div></div>}
+        {/* {view === "subscriptionsView" && <div></div>} */}
       </div>
     </div>
   );
