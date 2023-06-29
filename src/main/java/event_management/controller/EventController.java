@@ -38,7 +38,7 @@ public class EventController {
         Event event = eventService.getEventById(id);
         return ResponseEntity.ok(event);
     }
-    @GetMapping("/title/{id}")
+    @GetMapping("/title/{title}")
     public ResponseEntity<Event> getEventByTitle(@PathVariable String title) {
         Event event = eventService.getEventByTitle(title);
         return ResponseEntity.ok(event);
