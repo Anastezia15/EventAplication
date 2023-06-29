@@ -18,5 +18,7 @@ public class EventNotFoundException extends RuntimeException {
     public EventNotFoundException(String title) {
         super("Can't find the event with the title " + title);
     }
-
+    public EventNotFoundException(Long creatorId, Long s) {
+        super("Can't find the event with the CreatorId " + creatorId);
+    }
 }

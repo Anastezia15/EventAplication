@@ -53,7 +53,6 @@ class CategoryServiceTest {
         assertSame(expectedCategories, actualCategories);
         verify(categoryRepository).findAll();
     }
-
     @Test
     void getExistingCategoryById() {
         // Given

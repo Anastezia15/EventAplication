@@ -87,6 +87,4 @@ public class Event {
     public int hashCode() {
         return getClass().hashCode();
     }
-
-
 }

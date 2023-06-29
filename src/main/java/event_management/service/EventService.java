@@ -56,6 +56,10 @@ public class EventService {
 
         return savedEvent;
     }
+    public Event getEventByUser(User user){
+        return eventRepository.findByCreatorId(user.getId()).orElseThrow(() -> new EventNotFoundException(user.getId(), 1L));
+    }
+
 
     public Event createEvent(EventCreateDto eventCreateDto) {
         Event createdEvent = eventCreateDtoAdapter.fromDto(eventCreateDto);

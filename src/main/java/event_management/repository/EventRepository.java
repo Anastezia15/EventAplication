@@ -22,6 +22,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      */
     boolean existsByTitle(String title);
     Optional<Event> findByTitle(String title);
+    Optional<Event> findByCreatorId(Long creatorId);
 
     Page<Event> findByCategory(Category category, Pageable pageable);
 

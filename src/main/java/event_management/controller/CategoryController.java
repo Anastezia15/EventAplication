@@ -32,7 +32,6 @@ public class CategoryController {
 
         return ResponseEntity.ok(category);
     }
-
     @GetMapping("/{id}/events")
     public ResponseEntity<CategoryWithEventsDto> getCategoryEvents(
             @PathVariable Long id,
@@ -45,8 +44,6 @@ public class CategoryController {
 
         return ResponseEntity.ok(new CategoryWithEventsDto(category));
     }
-
-
     @PostMapping
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         Category createdCategory = categoryService.createCategory(category);

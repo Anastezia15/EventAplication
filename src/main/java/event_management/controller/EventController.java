@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("http://localhost:8080")
@@ -33,6 +34,12 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @GetMapping("/creatorId/{creatorId}")
+    public ResponseEntity<List<Event>> getEventByCreatorId(@PathVariable Long creatorId) {
+       List <Event> events = eventService.getAll().stream().filter(event -> event.getCreatorId().equals(creatorId))
+               .collect(Collectors.toList());
+        return ResponseEntity.ok(events);
+    }
     @GetMapping("/id/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable Long id) {
         Event event = eventService.getEventById(id);

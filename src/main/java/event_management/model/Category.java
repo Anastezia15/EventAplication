@@ -40,7 +40,6 @@ public class Category {
         this.id = id;
         this.name = name;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,7 +47,6 @@ public class Category {
         Category category = (Category) o;
         return getId() != null && Objects.equals(getId(), category.getId());
     }
-
     @Override
     public int hashCode() {
         return getClass().hashCode();

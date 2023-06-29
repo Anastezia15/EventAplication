@@ -131,7 +131,6 @@ class EventControllerTest {
                 Time.valueOf("19:00:00"),
                 "Music"
         );
-
         Event event = Event.builder()
                 .id(1L)
                 .creatorId(1L)
@@ -146,7 +145,6 @@ class EventControllerTest {
 
         when(eventService.createEvent(Mockito.any(EventCreateDto.class))).thenReturn(event);
 
-        // When and Then
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/v1/events")
                         .contentType(MediaType.APPLICATION_JSON)
