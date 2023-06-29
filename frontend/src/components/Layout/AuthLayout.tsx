@@ -6,7 +6,15 @@ const AuthLayout = () => {
   const [view, setView] = useState<string>("loginView");
 
   return (
-    <div className="max-w-sm mx-auto pt-40">
+    <div className="max-w-sm mx-auto pt-0">
+      <div className="flex flex-col justify-center items-center">
+        <img
+          src="../../../public/sphereImg-removebg-preview.png"
+          alt="Sphere image"
+          className="w-[400px] h-[400px]"
+        />
+        <h1 className="text-[50px] text-white pb-4 text-center">Event Sphere</h1>
+      </div>
       <div className=" bg-white border-blue-300 border-2 rounded p-10 pt-0 shadow-2xl">
         <div className="pb-8 flex">
           <button

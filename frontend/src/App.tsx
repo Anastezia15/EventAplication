@@ -2,7 +2,7 @@ import GlobalLayout from "./components/Layout/GlobalLayout";
 
 function App() {
   return (
-    <div className="bg-blue-300 w-full h-full">
+    <div className="bg-blue-950 w-full h-full">
       <GlobalLayout />
     </div>
   );

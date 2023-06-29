@@ -2,12 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import AuthLayout from "./AuthLayout";
 import { useEffect } from "react";
-import { setIsLoggedIn } from "../../store/appSlice";
+import { setAdmin, setIsLoggedIn } from "../../store/appSlice";
 import UserMenu from "../UserMenu/UserMenu";
+import AdminPanel from "../AdminPanel";
 
 const GlobalLayout = () => {
   const userLoggedIn = useSelector((state: RootState) => state.appState.userData.isLoggedIn);
   const userData = useSelector((state: RootState) => state.appState.userData);
+  const isAdmin = useSelector((state: RootState) => state.appState.isAdmin);
 
   const dispatch = useDispatch();
 
@@ -24,6 +26,9 @@ const GlobalLayout = () => {
         isLoggedIn: false,
       })
     );
+
+    localStorage.setItem("isAdmin", "false");
+    dispatch(setAdmin(false));
   };
 
   return (
@@ -39,8 +44,16 @@ const GlobalLayout = () => {
             >
               Logout
             </button>
+            <div className="flex flex-col justify-center items-center">
+              <img
+                src="../../../public/sphereImg-removebg-preview.png"
+                alt="Sphere image"
+                className="w-[400px] h-[400px]"
+              />
+              <h1 className="text-[50px] text-white pb-4 text-center">Event Sphere</h1>
+            </div>
 
-            <UserMenu />
+            {isAdmin ? <AdminPanel /> : <UserMenu />}
           </>
         )}
       </div>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setIsLoggedIn, setUserData } from "../../store/appSlice";
+import { setAdmin, setIsLoggedIn, setUserData } from "../../store/appSlice";
 import { BASE_URL } from "../../config";
 import { getUserEvents } from "../../api";
 
@@ -16,6 +16,32 @@ const Login = () => {
     event.preventDefault();
 
     if (!loginRef.current || !passwordRef.current) return null;
+
+    if (loginRef.current.value === "admin" && passwordRef.current.value === "admin") {
+      dispatch(
+        setUserData({
+          isLoggedIn: true,
+          username: "admin",
+          email: "admin",
+          id: 1111111,
+          userEvents: [],
+        })
+      );
+
+      localStorage.setItem(
+        "userData",
+        JSON.stringify({
+          isLoggedIn: true,
+          username: "admin",
+          email: "admin",
+          id: 1111111,
+          userEvents: [],
+        })
+      );
+      localStorage.setItem("isAdmin", "true");
+
+      dispatch(setAdmin(true));
+    }
 
     const response = await axios({
       method: "get",

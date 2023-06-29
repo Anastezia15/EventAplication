@@ -8,8 +8,10 @@ import { BASE_URL } from "../config";
 
 interface Props {
   event: IEvent;
+  isCurrentUserEvent?: boolean;
+  allowSubscribtion?: boolean;
 }
-const EventCard = ({ event }: Props) => {
+const EventCard = ({ event, isCurrentUserEvent, allowSubscribtion = true }: Props) => {
   const {
     category: { name: categoryName },
     date,
@@ -56,6 +58,14 @@ const EventCard = ({ event }: Props) => {
     }
   };
 
+  const deleteEventHandler = async () => {
+    await axios({
+      method: "delete",
+      url: `${BASE_URL}/events/${id}`,
+      responseType: "json",
+    });
+  };
+
   return (
     <div className="bg-slate-400 shadow-xl rounded p-2 flex flex-col items-center">
       <h3 className="pb-2 text-xl">{title}</h3>
@@ -74,15 +84,26 @@ const EventCard = ({ event }: Props) => {
       <div>Location: {location}</div>
       <div>Category: {categoryName}</div>
 
-      <div className="self-end pt-2 place-items-end flex-1 flex">
-        <button
-          className={`${
-            isSubscribed ? "bg-red-800" : "bg-green-900"
-          } text-white p-2 rounded-xl h-10`}
-          onClick={subscribeHandler}
-        >
-          {isSubscribed ? "Unsubscribe" : "Subscribe"}
-        </button>
+      <div className="self-end pt-2 place-items-end flex-1 flex gap-3">
+        {isCurrentUserEvent && (
+          <button
+            className="bg-red-800 text-white p-2 rounded-xl h-10"
+            onClick={deleteEventHandler}
+          >
+            Delete
+          </button>
+        )}
+
+        {allowSubscribtion && (
+          <button
+            className={`${
+              isSubscribed ? "bg-red-800" : "bg-green-900"
+            } text-white p-2 rounded-xl h-10`}
+            onClick={subscribeHandler}
+          >
+            {isSubscribed ? "Unsubscribe" : "Subscribe"}
+          </button>
+        )}
       </div>
     </div>
   );

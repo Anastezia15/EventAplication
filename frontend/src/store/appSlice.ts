@@ -25,7 +25,7 @@ const initialState: CounterState = {
   userData: JSON.parse(localStorage.getItem("userData")!) || {
     userEvents: [],
   },
-  isAdmin: false,
+  isAdmin: JSON.parse(localStorage.getItem("isAdmin")!) || false,
 };
 
 export const appStateSlice = createSlice({
@@ -62,10 +62,14 @@ export const appStateSlice = createSlice({
         );
       }
     },
+    setAdmin: (state, action: PayloadAction<boolean>) => {
+      state.isAdmin = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setIsLoggedIn, toggleSubscribeEventForUser, setUserData } = appStateSlice.actions;
+export const { setIsLoggedIn, toggleSubscribeEventForUser, setUserData, setAdmin } =
+  appStateSlice.actions;
 
 export default appStateSlice.reducer;
