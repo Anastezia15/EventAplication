@@ -11,6 +11,7 @@ import event_management.user_management.service.UserService;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:8080")
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
@@ -26,6 +27,7 @@ public class UserController {
         return ResponseEntity.ok(usersListDto);
     }
 
+    @CrossOrigin
     @GetMapping("/{username}")
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
         User user = userService.getUser(username);
