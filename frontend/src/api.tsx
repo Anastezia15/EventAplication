@@ -53,7 +53,7 @@ export const getEventById = async (eventId: string) => {
     responseType: "json",
   });
   return response.data;
-}
+};
 
 export const getEventByTitle = async (title: string) => {
   const response = await axios({
@@ -62,7 +62,7 @@ export const getEventByTitle = async (title: string) => {
     responseType: "json",
   });
   return response.data;
-}
+};
 
 export const deleteUser = async (userId: number) => {
   const response = await axios({
@@ -71,4 +71,35 @@ export const deleteUser = async (userId: number) => {
     responseType: "json",
   });
   return response.data;
-}
+};
+
+export const getAllCategories = async () => {
+  const response = await axios({
+    method: "get",
+    url: `${BASE_URL}/categories`,
+    responseType: "json",
+  });
+  return response.data;
+};
+
+export const addNewCategory = async (name: string) => {
+  const data = {
+    name,
+  };
+  const response = await axios({
+    method: "post",
+    url: `${BASE_URL}/categories`,
+    responseType: "json",
+    data,
+  });
+  return response.data;
+};
+
+export const deleteCategory = async (id: number) => {
+  const response = await axios({
+    method: "delete",
+    url: `${BASE_URL}/categories/${id}`,
+    responseType: "json",
+  });
+  return response.data;
+};

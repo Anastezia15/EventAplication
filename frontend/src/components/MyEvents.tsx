@@ -20,7 +20,7 @@ const MyEvents = () => {
     <div className="pt-10">
       <div className="grid grid-flow-row grid-cols-2 gap-4">
         {userEvents?.map((event: any) => (
-          <EventCard key={event.id} event={event} isCurrentUserEvent={false} />
+          <EventCard key={event.id} event={event} isCurrentUserEvent={true} />
         ))}
       </div>
     </div>

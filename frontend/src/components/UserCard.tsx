@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { deleteUser, getUserEvents } from "../api";
 
-const UserCard = ({ user, setDeleteSuccesseful }) => {
+const UserCard = ({ user, setDeleteSuccesseful }: any) => {
   const [userData, setUserData] = useState<any | null>(null);
   useEffect(() => {
     (async () => {

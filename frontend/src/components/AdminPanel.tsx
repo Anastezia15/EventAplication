@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ViewUsers from "./ViewUsers";
 import ViewEvents from "./ViewEvents";
+import ViewCategories from "./ViewCategories";
 
 const AdminPanel = () => {
   const [view, setView] = useState<string>("usersView");
@@ -19,13 +20,13 @@ const AdminPanel = () => {
             className={`${view === "eventsView" && "bg-blue-300 rounded-b-lg "} p-4`}
             onClick={() => setView("eventsView")}
           >
-            Categories
+            View Events
           </button>
           <button
             className={`${view === "categoriesView" && "bg-blue-300 rounded-b-lg "} p-4`}
             onClick={() => setView("categoriesView")}
           >
-            My events
+            Categories
           </button>
           <button
             className={`${view === "createEventView" && "bg-blue-300 rounded-b-lg "} p-4`}
@@ -37,7 +38,7 @@ const AdminPanel = () => {
 
         {view === "usersView" && <ViewUsers />}
         {view === "eventsView" && <ViewEvents />}
-        {view === "categoriesView" && <div>categoriesView</div>}
+        {view === "categoriesView" && <ViewCategories />}
         {view === "subscriptionsView" && <div></div>}
       </div>
     </div>
