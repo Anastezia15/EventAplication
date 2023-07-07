@@ -1,15 +1,15 @@
-package event_management.user_management.model;
+package user_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import event_management.model.Event;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.util.Objects;
 import java.util.Set;
@@ -65,6 +65,11 @@ public class User {
     @Past(message = "Birth date must be in the past")
     private Date dateOfBirth;
 
+    @Basic
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
+    private String role;
+
     @ManyToMany
     @JoinTable(
             name = "user_event_subscription",
@@ -72,6 +77,7 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "event_id")})
     @JsonIgnore
     private Set<Event> eventSubscriptionList;
+
 
     public User(Long id, @NotNull String username, @NotNull String password, @NotNull String email) {
         this.id = id;

@@ -1,14 +1,14 @@
 package event_management.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import event_management.user_management.model.User;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.Hibernate;
+import user_management.model.User;
 
+import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Objects;

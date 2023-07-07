@@ -10,8 +10,8 @@ import event_management.model.dto.adapter.EventCreateDtoAdapter;
 import event_management.model.dto.adapter.EventUpdateDtoAdapter;
 import event_management.repository.CategoryRepository;
 import event_management.repository.EventRepository;
-import event_management.user_management.model.User;
-import event_management.user_management.service.UserService;
+import user_management.model.User;
+import user_management.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

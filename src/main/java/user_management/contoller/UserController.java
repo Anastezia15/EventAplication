@@ -1,12 +1,12 @@
-package event_management.user_management.contoller;
+package user_management.contoller;
 
-import event_management.user_management.model.User;
-import event_management.user_management.model.dto.UserDto;
+import user_management.model.User;
+import user_management.model.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import event_management.user_management.service.UserService;
+import user_management.service.UserService;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/admin")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> usersListDto = userService.getAllUsers();
         return ResponseEntity.ok(usersListDto);
@@ -34,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/admin/id/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
         UserDto userDto = new UserDto(userService.getUserById(id));
         return ResponseEntity.ok(userDto);
@@ -46,13 +46,19 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/admin")
+    public ResponseEntity<User> createAdmin(@RequestBody User admin) {
+        User createdAdmin = userService.createUser(admin);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAdmin);
+    }
+
+    @PutMapping("/user/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto)
     {
         return ResponseEntity.ok(new UserDto(userService.updateUser(id, userDto)));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();

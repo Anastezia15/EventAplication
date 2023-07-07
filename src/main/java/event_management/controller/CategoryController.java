@@ -4,11 +4,11 @@ import event_management.model.Category;
 import event_management.model.dto.CategoryDto;
 import event_management.model.dto.CategoryWithEventsDto;
 import event_management.service.CategoryService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -44,21 +44,21 @@ public class CategoryController {
 
         return ResponseEntity.ok(new CategoryWithEventsDto(category));
     }
-    @PostMapping
+    @PostMapping("/admin")
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
         Category createdCategory = categoryService.createCategory(category);
 
         return ResponseEntity.created(null).body(createdCategory);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/admin/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryDto categoryDto) {
         Category updatedCategory = categoryService.updateCategory(id, categoryDto);
 
         return ResponseEntity.ok(updatedCategory);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok().build();

@@ -1,12 +1,12 @@
-package event_management.user_management.model.dto;
+package user_management.model.dto;
 
-import event_management.user_management.model.User;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+import user_management.model.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 @Data
 public class UserDto {
@@ -34,6 +34,8 @@ public class UserDto {
     @Past(message = "Birth date must be in the past")
     private Date dateOfBirth;
 
+    private String role;
+
     public UserDto(User user) {
         this.username= user.getUsername();
         this.password = user.getPassword();
@@ -41,5 +43,6 @@ public class UserDto {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.dateOfBirth = user.getDateOfBirth();
+        this.role = user.getRole();
     }
 }
