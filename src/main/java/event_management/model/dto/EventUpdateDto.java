@@ -2,6 +2,8 @@ package event_management.model.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.sql.Time;
 
