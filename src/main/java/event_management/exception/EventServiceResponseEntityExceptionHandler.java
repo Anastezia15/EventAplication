@@ -4,7 +4,7 @@ import event_management.util.ErrorUtils;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -85,7 +85,6 @@ public class EventServiceResponseEntityExceptionHandler extends ResponseEntityEx
      *
      * @param ex      the exception to handle.
      * @param headers the headers for the response.
-     * @param status  the status for the response.
      * @param request the current request.
      * @return a ResponseEntity containing the error details and status.
      */
@@ -93,7 +92,6 @@ public class EventServiceResponseEntityExceptionHandler extends ResponseEntityEx
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             @NonNull HttpHeaders headers,
-            @NonNull HttpStatusCode status,
             WebRequest request
     ) {
         BeanValidationErrorDetails errorDetails = new BeanValidationErrorDetails(LocalDateTime.now(),

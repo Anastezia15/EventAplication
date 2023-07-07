@@ -1,7 +1,5 @@
 package event_management.model.dto;
 
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.sql.Date;

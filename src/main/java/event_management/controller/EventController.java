@@ -5,14 +5,14 @@ import event_management.model.dto.EventCreateDto;
 import event_management.model.dto.EventUpdateDto;
 import event_management.repository.EventRepository;
 import event_management.service.EventService;
-import user_management.UserRepository;
-import user_management.model.User;
-import user_management.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import user_management.UserRepository;
+import user_management.model.User;
+import user_management.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
